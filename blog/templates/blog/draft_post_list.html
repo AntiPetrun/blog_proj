@@ -7,15 +7,6 @@
 <body>
 <div>
     <h1>Posts</h1>
-    {% for category in categories %}
-    <div>
-        <a href="{% url 'by_category' category_pk=category.pk %}">{{ category }}</a>
-    </div>
-    {% endfor %}
-    <p>Post quantity - {{ count }}</p>
-</div>
-<br>
-<div>
     {% for post in posts %}
     <div>
         <a href="{% url 'post_detail' post_pk=post.pk %}">{{ post.title }}</a>

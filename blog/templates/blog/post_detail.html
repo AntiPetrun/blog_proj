@@ -7,10 +7,26 @@
 <body>
 <div>
     <h1>Post Details</h1>
-    <h4>{{ post.title }}</h4>
+    <h4>{{ post.title }} ({{ count }})</h4>
+    <p>{{ post.category }}</p>
     <p>{{ post.body }}</p>
-    <p>{{ post.created_date }}</p>
     <p>{{ post.published_date }}</p>
+    <p>{{ post.is_published }}</p>
+    <p>
+        <a href="{% url 'post_create' %}">create</a>
+        <a href="{% url 'post_update' post_pk=post.pk %}">edit</a>
+        <a href="{% url 'post_delete' post_pk=post.pk %}">delete</a>
+        {% if post.is_published == False %}
+        <a href="{% url 'set_published' post_pk=post.pk %}">Publish</a>
+        {% endif %}
+    </p>
+    <br>
+    {% for comment in comments %}
+    <p>{{ comment.body }}</p>
+    <p>{{ comment.published_date }}</p>
+    <p>{{ comment.author }}</p>
+    <br>
+    {% endfor %}
 </div>
 </body>
 </html>
