@@ -6,8 +6,9 @@
 </head>
 <body>
 <div>
-    <h1>Post Details</h1>
-    <h4>{{ post.title }} ({{ count }})</h4>
+    <h1><a href="{% url 'post_list' %}" >Posts</a></h1>
+    <h2>Post Details</h2>
+    <h4>{{ post.title }} (comments - {{ count }}, rating - {{ rating }})</h4>
     <p>{{ post.category }}</p>
     <p>{{ post.body }}</p>
     <p>{{ post.published_date }}</p>
@@ -20,13 +21,26 @@
         <a href="{% url 'set_published' post_pk=post.pk %}">Publish</a>
         {% endif %}
     </p>
+    <p>
+        <a href="{% url 'feedback_by_post' post_pk=post.pk %}">Feedbacks</a>
+    </p>
     <br>
     {% for comment in comments %}
     <p>{{ comment.body }}</p>
     <p>{{ comment.published_date }}</p>
     <p>{{ comment.author }}</p>
+    <p>
+        {% if user.id == comment.author.id %}
+        <a href="{% url 'comment_delete' comment_pk=comment.pk post_pk=post.pk %}">delete</a>
+        {% endif %}
+    </p>
     <br>
     {% endfor %}
 </div>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
+</form>
 </body>
 </html>

@@ -1,6 +1,6 @@
 from django import forms
 
-from blog.models import Post
+from blog.models import Post, Comment
 
 
 class PostForm(forms.ModelForm):
@@ -13,3 +13,11 @@ class PostForm(forms.ModelForm):
 
     def delete(self):
         self.instance.delete()
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = (
+            'body',
+        )

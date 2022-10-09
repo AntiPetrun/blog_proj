@@ -1,6 +1,4 @@
-from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.fields import related
 
 
 class Post(models.Model):
@@ -24,6 +22,10 @@ class Post(models.Model):
         blank=True,
         null=True
     )
+
+    @property
+    def rating(self):
+        return self.feedback.aggregate(models.Avg('rating')).get('rating__avg')
 
     def __str__(self):
         return self.title
@@ -58,3 +60,24 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Feedback(models.Model):
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE
+    )
+    author = models.ForeignKey(
+        'auth.user',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        verbose_name='author'
+    )
+    body = models.TextField()
+    date = models.DateField(
+        auto_now_add=True
+    )
+    rating = models.IntegerField(
+        default=1
+    )

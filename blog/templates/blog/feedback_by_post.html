@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Feedbacks</title>
+</head>
+<body>
+<div>
+    <h1><a href="{% url 'post_list' %}" >Posts</a></h1>
+    <h3><a href="{% url 'draft_post_list' %}" >Drafts</a></h3>
+    {% for category in categories %}
+    <div>
+        <a href="{% url 'by_category' category_pk=category.pk %}">{{ category }}</a>
+    </div>
+    {% endfor %}
+</div>
+<br>
+<div>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.body }}</p>
+    <p>{{ post.published_date }}</p>
+    <p>{{ post.category }}</p>
+</div>
+<div>
+    <h3>Feedback's average rating: {{ rating }}</h3>
+    {% for feedback in feedbacks %}
+    <p>{{ feedback.rating }}</p>
+    <p>{{ feedback.body }}</p>
+    <p>{{ feedback.date }}</p>
+    {% endfor %}
+</div>
+</body>
+</html>

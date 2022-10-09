@@ -1,9 +1,8 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
 from blog.views import post_list, post_detail, post_create, \
     post_update, post_delete, set_published, draft_post_list, \
-    by_category
+    by_category, comment_delete, feedback_by_post, recommendation_list
 
 urlpatterns = [
     path('posts', post_list, name='post_list'),
@@ -12,6 +11,9 @@ urlpatterns = [
     path('post/new/', post_create, name='post_create'),
     path('post/update/<int:post_pk>', post_update, name='post_update'),
     path('post/delete/<int:post_pk>', post_delete, name='post_delete'),
+    path('post/detail/<int:post_pk>/comment_delete/<int:comment_pk>', comment_delete, name='comment_delete'),
     path('post/published/<int:post_pk>', set_published, name='set_published'),
     path('post/by_category/<int:category_pk>', by_category, name='by_category'),
+    path('feedbacks/<int:post_pk>', feedback_by_post, name='feedback_by_post'),
+    path('recommendations', recommendation_list, name='recommendation_list')
 ]
