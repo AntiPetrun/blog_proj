@@ -6,24 +6,27 @@
 </head>
 <body>
 <div>
-    <h1>Posts</h1>
+    <h1><a href="{% url 'post_list' %}" >Posts {{ count }}</a></h1>
+    <h3><a href="{% url 'draft_post_list' %}" >Drafts</a></h3>
     {% for category in categories %}
     <div>
         <a href="{% url 'by_category' category_pk=category.pk %}">{{ category }}</a>
     </div>
     {% endfor %}
-    <p>Post quantity - {{ count }}</p>
 </div>
-<br>
+<p><a href="{% url 'post_create' %}">create</a></p>
+<div>
+    <a href="{% url 'recommendation_list' %}">recommendations</a>
+</div>
 <div>
     {% for post in posts %}
     <div>
-        <a href="{% url 'post_detail' post_pk=post.pk %}">{{ post.title }}</a>
+        <a href="{% url 'post_detail' post_pk=post.pk %}">{{ post.title }} ({{ post.feedback__rating__avg }})</a>
     </div>
     <p>{{ post.body }}</p>
     <p>{{ post.published_date }}</p>
     <p>
-        <a href="{% url 'post_create' %}">create</a>
+
         <a href="{% url 'post_update' post_pk=post.pk %}">edit</a>
         <a href="{% url 'post_delete' post_pk=post.pk %}">delete</a>
     </p>
