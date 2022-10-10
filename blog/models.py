@@ -22,6 +22,12 @@ class Post(models.Model):
         blank=True,
         null=True
     )
+    author = models.ForeignKey(
+        'auth.user',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+    )
 
     @property
     def rating(self):

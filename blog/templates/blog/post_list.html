@@ -17,6 +17,7 @@
 <p><a href="{% url 'post_create' %}">create</a></p>
 <div>
     <a href="{% url 'recommendation_list' %}">recommendations</a>
+    <a href="{% url 'user_post_list' %}">my posts</a>
 </div>
 <div>
     {% for post in posts %}
@@ -24,6 +25,7 @@
         <a href="{% url 'post_detail' post_pk=post.pk %}">{{ post.title }} ({{ post.feedback__rating__avg }})</a>
     </div>
     <p>{{ post.body }}</p>
+    <p>{{ post.author }}</p>
     <p>{{ post.published_date }}</p>
     <p>
 

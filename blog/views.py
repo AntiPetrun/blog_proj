@@ -15,7 +15,7 @@ def ratings(post_pk: int):
 
 
 def post_list(request: HttpRequest):
-    posts = Post.objects.all().filter(is_published=True).order_by('-created_date')
+    posts = Post.objects.all().filter(is_published=True).annotate(Avg('feedback__rating')).order_by('-created_date')
     categories = Category.objects.all().order_by('name')
     count = posts.count()
     context = {'posts': posts, 'categories': categories, 'count': count}
@@ -125,7 +125,16 @@ def feedback_by_post(request: HttpRequest, post_pk: int):
 
 
 def recommendation_list(request: HttpRequest):
-    posts = Post.objects.values('title', 'pk').annotate(Avg('feedback__rating')).order_by('-feedback__rating__avg')
+    posts = Post.objects.values('title', 'pk').annotate(Avg('feedback__rating')).order_by('-feedback__rating__avg')[:5]
+    categories = Category.objects.all().order_by('name')
+    count = posts.count()
+    context = {'posts': posts, 'categories': categories, 'count': count}
+    return render(request, 'blog/post_list.html', context)
+
+
+def user_post_list(request: HttpRequest):
+    posts = Post.objects.all().filter(is_published=True, author=request.user).annotate(Avg('feedback__rating')).order_by(
+        '-created_date')
     categories = Category.objects.all().order_by('name')
     count = posts.count()
     context = {'posts': posts, 'categories': categories, 'count': count}

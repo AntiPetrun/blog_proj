@@ -2,9 +2,11 @@ from django.urls import path
 
 from blog.views import post_list, post_detail, post_create, \
     post_update, post_delete, set_published, draft_post_list, \
-    by_category, comment_delete, feedback_by_post, recommendation_list
+    by_category, comment_delete, feedback_by_post, \
+    recommendation_list, user_post_list
 
 urlpatterns = [
+    path('user_posts', user_post_list, name='user_post_list'),
     path('posts', post_list, name='post_list'),
     path('posts_draft', draft_post_list, name='draft_post_list'),
     path('post/detail/<int:post_pk>', post_detail, name='post_detail'),
